@@ -1,5 +1,5 @@
 %pso parameters
-swarmSize = 30;
+swarmSize = 1; %30
 dimension = m * (n + 2);
 xmax = 1;
 xmin = -1;
@@ -8,7 +8,7 @@ vmin = -0.1;
 w = 0.9; %inertia weight (momentum term)
 c1 = 2.05;
 c2 = 2.05; %individual and global acceleration coefficients
-iterMax = 30; %10
+iterMax = 1; %30
 maxCountStopCriteria = 100;
 
 disp('PSO initialiazation');

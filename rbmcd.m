@@ -22,6 +22,8 @@
 % batchdata -- the data that is divided into batches (numcases numdims numbatches)
 % restart   -- set to 1 if learning starts from beginning 
 
+maxepoch = 1;
+
 epsilonw      = 0.1;   % Learning rate for weights 
 epsilonvb     = 0.1;   % Learning rate for biases of visible units 
 epsilonhb     = 0.1;   % Learning rate for biases of hidden units 

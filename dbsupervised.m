@@ -21,6 +21,8 @@ switch db
 %             series(i, 1) = (seriesRaw(i, 1) - meanValue) / stdValue;            
 %         end
                 
+        %series = seriesRaw;
+
         data1Block = zeros(980 - n, n);
         data2Block = zeros(980 - n, n);
         data3Block = zeros(980 - n, n);
