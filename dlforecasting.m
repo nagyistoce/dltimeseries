@@ -3,12 +3,12 @@ disp(datestr(now));
 %clear all
 close all
 
-n = 20;
-m = 18;
+n = 20; %20
+m = 18; %18
 batchsize = 100;
 
 disp('Reading database...');
-db = 'CATS';
+db = 'ACIDENTES';
 dbunsupervised;
 
 disp(datestr(now));

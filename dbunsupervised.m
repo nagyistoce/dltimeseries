@@ -63,4 +63,26 @@ switch db
             batchdata(:,:,b) = data(randomorder(1+(b-1)*batchsize:b*batchsize), :);            
         end;
         
+    case 'ACIDENTES'
+        fid = fopen('accidentes.trn.dat');
+        seriesRaw = fscanf(fid, '%f');
+        
+        % [-1, 1]
+        series = 2*(seriesRaw - min(seriesRaw))/(max(seriesRaw) - min(seriesRaw)) - 1;
+        
+        data = zeros(size(series, 1) - n + 1, n);
+        
+        for i=1:size(data, 1)
+            data(i, :) = series(i:i+n-1);            
+        end
+        
+        numbatches = 8;
+        batchsize = round(size(data, 1) / numbatches);
+        batchdata = zeros(batchsize, n, numbatches);
+        randomorder=randperm(size(data, 1));
+        
+        for b=1:numbatches
+            batchdata(:,:,b) = data(randomorder(1+(b-1)*batchsize:b*batchsize), :);            
+        end;
+        
 end

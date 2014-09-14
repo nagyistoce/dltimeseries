@@ -69,5 +69,23 @@ switch db
         end
        
         data = [data1Block; data2Block; data3Block; data4Block; data5Block];
+        
+        
+        
+    case 'ACIDENTES'
+        fid = fopen('accidentes.trn.dat');
+        seriesRaw = fscanf(fid, '%f');
+        
+        % [-1, 1]
+        series = 2*(seriesRaw - min(seriesRaw))/(max(seriesRaw) - min(seriesRaw)) - 1;
+        
+        data = zeros(size(series, 1) - n, n);
+        targets = zeros(size(series, 1) - n, 1);
+        
+        for i=1:size(data, 1)
+            data(i, :) = series(i:i+n-1);    
+            targets(i) = series(i+n);
+        end
+          
 
 end
