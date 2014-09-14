@@ -1,5 +1,5 @@
 %pso parameters
-swarmSize = 1; %30
+swarmSize = 30; %30
 dimension = m * (n + 2);
 xmax = 1;
 xmin = -1;
@@ -8,7 +8,7 @@ vmin = -0.1;
 w = 0.9; %inertia weight (momentum term)
 c1 = 2.05;
 c2 = 2.05; %individual and global acceleration coefficients
-iterMax = 1; %30
+iterMax = 30; %30
 maxCountStopCriteria = 100;
 
 disp('PSO initialiazation');
@@ -16,8 +16,13 @@ fprintf('Swarm size: %d\n', swarmSize);
 
 load('rmb1');
 load('rmb2');
+numdims = n;
+numhid = m;
 swarm = 0.1*randn(dimension, swarmSize);
 swarm(:, 1) = [reshape(vishid1,n*m,1)' vishid2' visbiases2];
+for i=1+1:round(swarmSize*0.25)
+   swarm(:, i) = [reshape(vishid1,n*m,1)'+0.1*randn(1, numdims*numhid) vishid2'+0.1*randn(1, numhid) visbiases2+0.1*randn(1, numhid)]; 
+end
 % swarm(:, 1) = [reshape(vishid1,n*m,1)' vishid2' 0.1*randn(1, m)];
 lbest = swarm;
 v = 0.1*randn(dimension, swarmSize);
