@@ -20,13 +20,13 @@ for k=1:size(data, 1)
     end
    
     value = hiddenLayer' * alfa;
-    output = 1 / (1 + exp(-1 * value));
+    output = 1 / (1 + exp(-1 * value));   
     
     mse = mse + (output - target)^2;
    
 end
 
-mse = mse / 2;
+mse = mse / size(data, 1);
 
 fitness = mse;
 

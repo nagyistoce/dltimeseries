@@ -10,7 +10,7 @@ vmin = -1;
 w = 0.9; %inertia weight (momentum term)
 c1 = 2.05;
 c2 = 2.05; %individual and global acceleration coefficients
-iterMax = 30; %10
+iterMax = 100; %10
 maxCountStopCriteria = 100;
 
 disp('PSO initialiazation');
