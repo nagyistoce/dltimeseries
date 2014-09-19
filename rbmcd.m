@@ -100,6 +100,9 @@ for epoch = epoch:maxepoch,
     
 %%%%%%%%%%%%%%%% END OF UPDATES %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
 
-  end
+ end
+%   fprintf('mean(vishid(1,:)) %f \n', mean(vishid(1,:)));
+%   fprintf('mean(visbiases(1,:)) %f \n', mean(visbiases(1,:)));
+%   fprintf('mean(hidbiases(1,:)) %f \n', mean(hidbiases(1,:)));
   fprintf(1, 'epoch %4i error %6.1f  \n', epoch, errsum); 
 end;

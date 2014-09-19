@@ -1,5 +1,5 @@
 switch db    
-    case 'CATS'
+    case 'cats'
         fid = fopen('database/CATS.txt');
         seriesRaw = fscanf(fid, '%f');
         
@@ -9,13 +9,11 @@ switch db
         meanValue = mean(seriesRaw);
         stdValue = std(seriesRaw);
         % [-1, 1]
-        for i=1:size(seriesRaw, 1)
-            series(i, 1) = (seriesRaw(i, 1) - maxValue - minValue) / (maxValue - minValue);            
-        end
-        % [0, 1]
 %         for i=1:size(seriesRaw, 1)
-%             series(i, 1) = (seriesRaw(i, 1) - minValue) / (maxValue - minValue);            
+%             series(i, 1) = (seriesRaw(i, 1) - maxValue - minValue) / (maxValue - minValue);            
 %         end
+        % [0, 1]
+        series = (seriesRaw - min(seriesRaw)) / (max(seriesRaw) - min(seriesRaw));
         % N(0, 1)
 %         for i=1:size(seriesRaw, 1)
 %             series(i, 1) = (seriesRaw(i, 1) - meanValue) / stdValue;            
@@ -55,7 +53,7 @@ switch db
         
         data = [data1Block; data2Block; data3Block; data4Block; data5Block];
         
-        numbatches = round(size(data, 1) / batchsize);
+        numbatches = floor(size(data, 1) / batchsize);
         batchdata = zeros(batchsize, n, numbatches);
         randomorder=randperm(size(data, 1));
         
@@ -63,12 +61,15 @@ switch db
             batchdata(:,:,b) = data(randomorder(1+(b-1)*batchsize:b*batchsize), :);            
         end;
         
-    case 'ACIDENTES'
-        fid = fopen('accidentes.trn.dat');
+    case {'acidentes', 'bjd'}
+        fid = fopen(strcat(db,'.trn.dat'));
         seriesRaw = fscanf(fid, '%f');
         
         % [-1, 1]
-        series = 2*(seriesRaw - min(seriesRaw))/(max(seriesRaw) - min(seriesRaw)) - 1;
+        %series = 2*(seriesRaw - min(seriesRaw))/(max(seriesRaw) - min(seriesRaw)) - 1;
+        
+        % [0, 1]
+        series = (seriesRaw - min(seriesRaw)) / (max(seriesRaw) - min(seriesRaw));        
         
         data = zeros(size(series, 1) - n + 1, n);
         
@@ -76,8 +77,11 @@ switch db
             data(i, :) = series(i:i+n-1);            
         end
         
-        numbatches = 8;
-        batchsize = round(size(data, 1) / numbatches);
+        %numbatches = 8;
+        %batchsize = round(size(data, 1) / numbatches);
+        %numbatches = floor(size(data, 1) / batchsize);
+        numbatches = 1;
+        batchsize = size(data, 1);
         batchdata = zeros(batchsize, n, numbatches);
         randomorder=randperm(size(data, 1));
         

@@ -1,5 +1,5 @@
 switch db    
-    case 'CATS'
+    case 'cats'
         % BLOCK 1
         e1f1 = 0;
         seriesBlock1 = series(1:980);
@@ -14,7 +14,7 @@ switch db
             value = hiddenLayer' * alfa;
             output = 1 / (1 + exp(-1 * value));    
             seriesBlock1(980 + i) = output;    
-            output = ((maxValue - minValue) * output) + maxValue + minValue;    
+            output = ((max(seriesRaw) - min(seriesRaw)) * output) + min(seriesRaw);
             e1f1 = e1f1 + (targets1(i) - output)^2;    
         end
         e2f1 = e1f1;
@@ -35,7 +35,7 @@ switch db
             value = hiddenLayer' * alfa;
             output = 1 / (1 + exp(-1 * value));    
             seriesBlock2(980 + i) = output;    
-            output = ((maxValue - minValue) * output) + maxValue + minValue;    
+            output = ((max(seriesRaw) - min(seriesRaw)) * output) + min(seriesRaw);
             e1f2 = e1f2 + (targets2(i) - output)^2;    
         end
         e2f2 = e1f2;
@@ -56,7 +56,7 @@ switch db
             value = hiddenLayer' * alfa;
             output = 1 / (1 + exp(-1 * value));    
             seriesBlock3(980 + i) = output;    
-            output = ((maxValue - minValue) * output) + maxValue + minValue;    
+            output = ((max(seriesRaw) - min(seriesRaw)) * output) + min(seriesRaw);
             e1f3 = e1f3 + (targets3(i) - output)^2;    
         end
         e2f3 = e1f3;
@@ -77,7 +77,7 @@ switch db
             value = hiddenLayer' * alfa;
             output = 1 / (1 + exp(-1 * value));    
             seriesBlock4(980 + i) = output;    
-            output = ((maxValue - minValue) * output) + maxValue + minValue;    
+            output = ((max(seriesRaw) - min(seriesRaw)) * output) + min(seriesRaw); 
             e1f4 = e1f4 + (targets4(i) - output)^2;    
         end
         e2f4 = e1f4;
@@ -98,7 +98,7 @@ switch db
             value = hiddenLayer' * alfa;
             output = 1 / (1 + exp(-1 * value));    
             seriesBlock5(980 + i) = output;    
-            output = ((maxValue - minValue) * output) + maxValue + minValue;    
+            output = ((max(seriesRaw) - min(seriesRaw)) * output) + min(seriesRaw); 
             e1f5 = e1f5 + (targets5(i) - output)^2;
         end
         e1f5 = e1f5 / 100;
@@ -120,8 +120,8 @@ switch db
         y = seriesForecasting;
         
         
-    case 'ACIDENTES'
-        fid = fopen('accidentes.tst.dat');
+    case {'acidentes', 'bjd'}
+        fid = fopen(strcat(db,'.tst.dat'));
         seriesRaw = fscanf(fid, '%f');
 
         % [-1, 1]
@@ -149,18 +149,22 @@ switch db
             end
 
             value = hiddenLayer' * alfa;
-            output = 1 / (1 + exp(-1 * value));
-            output = (output/2+0.5) * (max(seriesRaw)-min(seriesRaw)) + min(seriesRaw);            
+            output = 1 / (1 + exp(-1 * value));            
+            %output = (output/2+0.5) * (max(seriesRaw)-min(seriesRaw)) + min(seriesRaw);   
+            output = ((max(seriesRaw) - min(seriesRaw)) * output) + min(seriesRaw);
            
             
             mae = mae + abs(output - target);
+            mse = mse + (output - target)^2;
    
         end
         
         mae = mae / size(data, 1);
+        mse = mse / size(data, 1);
         
         disp('-------------------------------------------');
         fprintf('MAE: %f\n', mae);      
+        fprintf('MSE: %f\n', mse);   
         
 end
 

@@ -8,7 +8,7 @@ m = 18; %18
 batchsize = 100;
 
 disp('Reading database...');
-db = 'ACIDENTES';
+db = 'acidentes';
 dbunsupervised;
 
 disp(datestr(now));
