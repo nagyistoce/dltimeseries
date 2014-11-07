@@ -1,6 +1,6 @@
 %pso parameters
-swarmSize = 10; %30
-dimension = m * (n + 2);
+swarmSize = 30; %30
+dimension = m * (n + 2) + 1;
 xmax = 1;
 xmin = -1;
 vmax = 0.1;
@@ -8,8 +8,8 @@ vmin = -0.1;
 w = 0.9; %inertia weight (momentum term)
 c1 = 2.05;
 c2 = 2.05; %individual and global acceleration coefficients
-iterMax = 10; %30
-maxCountStopCriteria = 10;
+iterMax = 50; %30
+maxCountStopCriteria = 500;
 
 disp('PSO initialiazation');
 fprintf('Swarm size: %d\n', swarmSize);
@@ -19,9 +19,17 @@ load('rmb2');
 numdims = n;
 numhid = m;
 swarm = 0.1*randn(dimension, swarmSize);
-%swarm(:, 1) = [reshape(vishid1,n*m,1)' vishid2' visbiases2];
+
+%swarm(:, 1) = [reshape(vishid1,n*m,1)' vishid2' hidbiases1 hidbiases2];
 swarm(1:n*m, 1) = reshape(vishid1,n*m,1)';
-swarm(n*m+1:n*m+m, 1) = vishid2'; % <============================ ou pso fitness
+
+
+
+%swarm(:, 1) = [reshape(vishid1,n*m,1)' vishid2' visbiases2];
+
+%swarm(1:n*m, 1) = reshape(vishid1,n*m,1)';
+%swarm(n*m+1:n*m+m, 1) = vishid2'; % <============================ ou pso fitness
+
 % for i=1+1:round(swarmSize*0.25)
 %    swarm(:, i) = [reshape(vishid1,n*m,1)'+0.1*randn(1, numdims*numhid) vishid2'+0.1*randn(1, numhid) visbiases2+0.1*randn(1, numhid)]; 
 % end
@@ -83,4 +91,6 @@ beta = reshape([beta(:) ; zeros(rem(n - rem(numel(beta),n),n),1)],n,[]);
 
 alfa = gbest((n*m+1):(n*m+m));
 
-bias = gbest((n*m+m+1):(n*m+2*m));
+biasHid = gbest((n*m+m+1):(n*m+2*m));
+
+biasOut = gbest(size(gbest, 1));

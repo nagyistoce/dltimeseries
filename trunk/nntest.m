@@ -125,7 +125,10 @@ switch db
         seriesRaw = fscanf(fid, '%f');
 
         % [-1, 1]
-        series = 2*(seriesRaw - min(seriesRaw))/(max(seriesRaw) - min(seriesRaw)) - 1;
+        %series = 2*(seriesRaw - min(seriesRaw))/(max(seriesRaw) - min(seriesRaw)) - 1;
+        
+        % [0, 1]
+        series = (seriesRaw - min(seriesRaw)) / (max(seriesRaw) - min(seriesRaw));
 
         data = zeros(size(series, 1) - n, n);
         targets = zeros(size(series, 1) - n, 1);
@@ -144,12 +147,18 @@ switch db
             hiddenLayer = zeros(m, 1);
 
             for j=1:m        
-                value = (beta(:, j)' * d') + bias(j, 1);  
+                value = (beta(:, j)' * d') + biasHid(j, 1);  
                 hiddenLayer(j, 1) = 1 / (1 + exp(-1 * value));
             end
 
-            value = hiddenLayer' * alfa;
-            output = 1 / (1 + exp(-1 * value));            
+            %value = hiddenLayer' * alfa;
+            %output = 1 / (1 + exp(-1 * value));   
+            
+            output = hiddenLayer' * alfa + biasOut;
+            
+            
+            
+            
             %output = (output/2+0.5) * (max(seriesRaw)-min(seriesRaw)) + min(seriesRaw);   
             output = ((max(seriesRaw) - min(seriesRaw)) * output) + min(seriesRaw);
            

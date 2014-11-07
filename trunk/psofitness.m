@@ -3,7 +3,9 @@ beta = reshape([beta(:) ; zeros(rem(n - rem(numel(beta),n),n),1)],n,[]);
 
 alfa = particle((n*m+1):(n*m+m));
 
-bias = particle((n*m+m+1):(n*m+2*m));
+biasHid = particle((n*m+m+1):(n*m+2*m));
+
+biasOut = particle(size(particle, 1));
 
 %wout = particle(size(particle,1));
 
@@ -15,12 +17,14 @@ for k=1:size(data, 1)
     hiddenLayer = zeros(m, 1);
    
     for j=1:m        
-        value = (beta(:, j)' * d') + bias(j, 1);  
+        value = (beta(:, j)' * d') + biasHid(j, 1);  
         hiddenLayer(j, 1) = 1 / (1 + exp(-1 * value));
     end
    
-    value = hiddenLayer' * alfa;
-    output = 1 / (1 + exp(-1 * value));   
+    %value = hiddenLayer' * alfa;
+    %output = 1 / (1 + exp(-1 * value));   
+    
+    output = hiddenLayer' * alfa + biasOut;
     
     mse = mse + (output - target)^2;
    
