@@ -120,7 +120,7 @@ switch db
         y = seriesForecasting;
         
         
-    case {'acidentes', 'bjd'}
+    case {'acidentes', 'bjd', 'scr', 'tri'}
         fid = fopen(strcat(db,'.tst.dat'));
         seriesRaw = fscanf(fid, '%f');
 

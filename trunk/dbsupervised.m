@@ -71,15 +71,14 @@ switch db
         
         
         
-    case {'acidentes', 'bjd'}
+    case {'acidentes', 'bjd', 'scr', 'tri'}
         fid = fopen(strcat(db,'.trn.dat'));
         seriesRaw = fscanf(fid, '%f');
         
-        % [-1, 1]
-        %series = 2*(seriesRaw - min(seriesRaw))/(max(seriesRaw) - min(seriesRaw)) - 1;
-        
         % [0, 1]
         series = (seriesRaw - min(seriesRaw)) / (max(seriesRaw) - min(seriesRaw));  
+        
+        %series = seriesRaw;
         
         data = zeros(size(series, 1) - n, n);
         targets = zeros(size(series, 1) - n, 1);
