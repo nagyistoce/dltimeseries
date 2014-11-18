@@ -120,7 +120,7 @@ switch db
         y = seriesForecasting;
         
         
-    case {'acidentes', 'bjd', 'scr', 'tri'}
+    case {'acidentes', 'bjd', 'scr', 'tri', 'elec'}
         fid = fopen(strcat(db,'.tst.dat'));
         seriesRaw = fscanf(fid, '%f');
 
@@ -139,6 +139,8 @@ switch db
         end
         
         mae = 0;
+        mse = 0;
+        mape = 0;
         
         for k=1:size(data, 1)            
     
@@ -154,26 +156,26 @@ switch db
             %value = hiddenLayer' * alfa;
             %output = 1 / (1 + exp(-1 * value));   
             
-            output = hiddenLayer' * alfa + biasOut;
-            
-            
-            
-            
-            %output = (output/2+0.5) * (max(seriesRaw)-min(seriesRaw)) + min(seriesRaw);   
+            output = hiddenLayer' * alfa + biasOut;                        
+           
             output = ((max(seriesRaw) - min(seriesRaw)) * output) + min(seriesRaw);
            
             
             mae = mae + abs(output - target);
             mse = mse + (output - target)^2;
+            mape = mape + abs((output - target) / target);
    
         end
         
         mae = mae / size(data, 1);
         mse = mse / size(data, 1);
+        mape = mape / size(data, 1);
         
         disp('-------------------------------------------');
         fprintf('MAE: %f\n', mae);      
-        fprintf('MSE: %f\n', mse);   
+        fprintf('MSE: %f\n', mse);  
+        fprintf('MAPE: %f\n', mape);
+        
         
 end
 

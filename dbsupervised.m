@@ -71,7 +71,7 @@ switch db
         
         
         
-    case {'acidentes', 'bjd', 'scr', 'tri'}
+    case {'acidentes', 'bjd', 'scr', 'tri', 'elec'}
         fid = fopen(strcat(db,'.trn.dat'));
         seriesRaw = fscanf(fid, '%f');
         
