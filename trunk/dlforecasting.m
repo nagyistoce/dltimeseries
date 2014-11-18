@@ -4,18 +4,18 @@ disp(datestr(now));
 close all
 
 n = 20; %20
-m = floor(n*0.75); %18
+m = 15; %floor(n*0.75); %18
 batchsize = 100;
 
 % pso parameters
 swarmSize = 30; %30
 dimension = m * (n + 2) + 1;
 swarm = zeros(dimension, swarmSize);
-iterMax = 30; %30
-maxCountStopCriteria = 500;
+iterMax = 200; %30
+maxCountStopCriteria = 20;
 
 disp('Reading database...');
-db = 'tri';
+db = 'elec';
 dbunsupervised;
 batchdata1 = batchdata;
 
@@ -24,9 +24,9 @@ numdims = n;
 numhid = m;
 fprintf(1, 'Pretraining Layer 1 with RBM: %d-%d \n', numdims, numhid);
 restart=1;
-rbmcd2;
+rbmcd;
 vishid1 = vishid; hidbiases1 = hidbiases; visbiases1 = visbiases;
-%save rmb1 vishid1 hidbiases1 visbiases1;
+save rmb1 vishid1 hidbiases1 visbiases1;
 
 disp(datestr(now));
 numdims = m;
@@ -37,7 +37,7 @@ batchdata=batchposhidprobs;
 restart=1;
 rbmcd;
 vishid2 = vishid; hidbiases2 = hidbiases; visbiases2 = visbiases;
-%save rmb2 vishid2 hidbiases2 visbiases2;
+save rmb2 vishid2 hidbiases2 visbiases2;
 
 % disp(datestr(now));
 % for i=1:swarmSize

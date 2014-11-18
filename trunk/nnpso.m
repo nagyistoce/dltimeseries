@@ -19,7 +19,7 @@ numdims = n;
 numhid = m;
 
 swarm = 0.1*randn(dimension, swarmSize);
-swarm(:, 1) = [reshape(vishid1,n*m,1)' vishid2' hidbiases1 hidbiases2];
+%swarm(:, 1) = [reshape(vishid1,n*m,1)' vishid2' hidbiases1 hidbiases2];
 
 
 
