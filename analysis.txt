@@ -1,27 +1,66 @@
+fprintf('mean(vishid(1,:)) %f \n', mean(vishid(1,:)));
+fprintf('mean(visbiases(1,:)) %f \n', mean(visbiases(1,:)));
+fprintf('mean(hidbiases(1,:)) %f \n', mean(hidbiases(1,:)));
+
 mnist
-	numcases x numdims x numbatches
-	100      x 784     x 600       = 60000
-	
+	rbm1 
+		mean(vishid(1,:)) -0.077983 
+		mean(visbiases(1,:)) -0.078870 
+		mean(hidbiases(1,:)) 1.095492 
+	rbm2
+		mean(vishid(1,:)) -0.011575 
+		mean(visbiases(1,:)) 0.271595 
+		mean(hidbiases(1,:)) 0.061861 
+		
+acidentes
+	rbm1
+		mean(vishid(1,:)) -0.125431 
+		mean(visbiases(1,:)) 0.947983 
+		mean(hidbiases(1,:)) 0.911437 	
+	rbm2
+		mean(vishid(1,:)) 2.459316 
+		mean(visbiases(1,:)) -1.083869 
+		mean(hidbiases(1,:)) -2.985910 
+		
 bjd
-	numcases x numdims x numbatches
-	100      x 24     x 98         = 9800
+	rbm1
+		mean(vishid(1,:)) -0.115845 
+		mean(visbiases(1,:)) 0.174022 
+		mean(hidbiases(1,:)) -1.058029 
+	rbm2
+		mean(vishid(1,:)) -1.220842 
+		mean(visbiases(1,:)) -1.887708 
+		mean(hidbiases(1,:)) 1.623237 
 	
-	
-RBMCD
--------------------------------------------
-MAE: 1.756324
-MSE: 4.556338
+fprintf('max(max(max(batchdata))) %f \n', max(max(max(batchdata))));
+fprintf('min(min(min(batchdata))) %f \n', min(min(min(batchdata))));
+fprintf('mean(mean(mean(batchdata))) %f \n', mean(mean(mean(batchdata))));
 
--RBM
--------------------------------------------
-MAE: 1.734827
-MSE: 4.445583
+max(max(max(batchdata))) 1.000000 
+min(min(min(batchdata))) 0.000000 
+mean(mean(mean(batchdata))) 0.423769
+	
+	
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+rbm
+MAE: 1.425290
+MSE: 3.016722
 
-RBMPSO
--------------------------------------------
-MAE: 1.943245
-MSE: 5.466713
+MAE: 1.677128
+MSE: 4.061637
+
+--
+not rbm
+MAE: 1.523226
+MSE: 3.493995
+
+MAE: 1.529203
+MSE: 3.515503
 	
 	
 	
-0.0247
+	
+	
+	
+	
+	

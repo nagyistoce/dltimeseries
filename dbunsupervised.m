@@ -61,27 +61,23 @@ switch db
             batchdata(:,:,b) = data(randomorder(1+(b-1)*batchsize:b*batchsize), :);            
         end;
         
-    case {'acidentes', 'bjd'}
+    case {'acidentes', 'bjd', 'scr', 'tri'}
         fid = fopen(strcat(db,'.trn.dat'));
         seriesRaw = fscanf(fid, '%f');
         
-        % [-1, 1]
-        %series = 2*(seriesRaw - min(seriesRaw))/(max(seriesRaw) - min(seriesRaw)) - 1;
-        
         % [0, 1]
-        series = (seriesRaw - min(seriesRaw)) / (max(seriesRaw) - min(seriesRaw));        
+        series = (seriesRaw - min(seriesRaw)) / (max(seriesRaw) - min(seriesRaw));     
+        
+        %series = seriesRaw;
         
         data = zeros(size(series, 1) - n + 1, n);
         
         for i=1:size(data, 1)
             data(i, :) = series(i:i+n-1);            
-        end
+        end    
         
-        %numbatches = 8;
-        %batchsize = round(size(data, 1) / numbatches);
-        %numbatches = floor(size(data, 1) / batchsize);
-        numbatches = 1;
-        batchsize = size(data, 1);
+        batchsize = 10; %size(data, 1);
+        numbatches = floor(size(data, 1)/batchsize);                      
         batchdata = zeros(batchsize, n, numbatches);
         randomorder=randperm(size(data, 1));
         
