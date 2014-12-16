@@ -64,9 +64,21 @@ switch db
     case {'acidentes', 'bjd', 'scr', 'tri', 'elec'}
         fid = fopen(strcat(db,'.trn.dat'));
         seriesRaw = fscanf(fid, '%f');
+        series = seriesRaw;
         
+%         % remove trend        
+%         for a=2:size(seriesRaw,1)
+%             series(a, 1) = seriesRaw(a, 1) - seriesRaw(a-1, 1);            
+%         end
+%         
+%         % remove seasonality
+%         season = 12;
+%         for a=1+season:size(seriesRaw,1)
+%             series(a, 1) = series(a, 1) - series(a-12, 1);            
+%         end
+       
         % [0, 1]
-        series = (seriesRaw - min(seriesRaw)) / (max(seriesRaw) - min(seriesRaw));     
+        series = (series - min(series)) / (max(series) - min(series));     
         
         %series = seriesRaw;
         
