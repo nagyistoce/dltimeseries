@@ -11,7 +11,7 @@ batchsize = 100;
 swarmSize = 30; %30
 dimension = m * (n + 2) + 1;
 swarm = zeros(dimension, swarmSize);
-iterMax = 200; %30
+iterMax = 300; %30
 maxCountStopCriteria = 20;
 
 disp('Reading database...');

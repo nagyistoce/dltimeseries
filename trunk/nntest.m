@@ -124,17 +124,17 @@ switch db
         fid = fopen(strcat(db,'.tst.dat'));
         seriesRaw = fscanf(fid, '%f');
 
-        % [-1, 1]
-        %series = 2*(seriesRaw - min(seriesRaw))/(max(seriesRaw) - min(seriesRaw)) - 1;
-        
         % [0, 1]
-        series = (seriesRaw - min(seriesRaw)) / (max(seriesRaw) - min(seriesRaw));
+        series = (seriesRaw - min(seriesRaw)) / (max(seriesRaw) - min(seriesRaw));        
 
         data = zeros(size(series, 1) - n, n);
+        normalizedTargets = zeros(size(series, 1) - n, 1);
         targets = zeros(size(series, 1) - n, 1);
+        outputs = zeros(size(series, 1) - n, 1);
 
         for i=1:size(data, 1)
-            data(i, :) = series(i:i+n-1);    
+            data(i, :) = series(i:i+n-1);  
+            normalizedTargets(i) = series(i+n);
             targets(i) = seriesRaw(i+n);
         end
         
@@ -146,6 +146,7 @@ switch db
     
             d = data(k, :);    
             target = targets(k, 1);
+            normalizedTarget = normalizedTargets(k, 1);
             hiddenLayer = zeros(m, 1);
 
             for j=1:m        
@@ -157,13 +158,15 @@ switch db
             %output = 1 / (1 + exp(-1 * value));   
             
             output = hiddenLayer' * alfa + biasOut;                        
-           
-            output = ((max(seriesRaw) - min(seriesRaw)) * output) + min(seriesRaw);
-           
             
-            mae = mae + abs(output - target);
-            mse = mse + (output - target)^2;
+            %mae = mae + abs(output - normalizedTarget);
+            %mse = mse + (output - normalizedTarget)^2;
+            
+            output = ((max(seriesRaw) - min(seriesRaw)) * output) + min(seriesRaw);
+            outputs(k, 1) = output;
+           
             mape = mape + abs((output - target) / target);
+            mse = mse + (output - target)^2;
    
         end
         
@@ -172,7 +175,7 @@ switch db
         mape = mape / size(data, 1);
         
         disp('-------------------------------------------');
-        fprintf('MAE: %f\n', mae);      
+        %fprintf('MAE: %f\n', mae);      
         fprintf('MSE: %f\n', mse);  
         fprintf('MAPE: %f\n', mape);
         
